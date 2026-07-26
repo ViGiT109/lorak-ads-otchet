@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>ЛораК — сопроводительное письмо к отчёту от 25 июля 2026</title>
+</head>
+<body>
+<style>
+/* ─────────────── токены (общие с отчётом) ─────────────── */
+:root{
+  color-scheme: light;
+  --plane:#F4F6F5; --surface:#FFFFFF; --surface-2:#EDF1F0;
+  --ink:#0F1A1D; --ink-2:#4B5A5E; --muted:#7E8D91;
+  --hair:#DCE4E3; --rule:#C6D2D1;
+  --mark:#0093A3; --mark-soft:rgba(0,147,163,.13); --mark-ink:#00636F;
+  --good:#0ca30c; --warn:#fab219;
+  --shadow:0 1px 2px rgba(15,26,29,.05), 0 8px 24px -16px rgba(15,26,29,.18);
+  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --serif:Georgia,"Noto Serif","Liberation Serif","Times New Roman",serif;
+  --mono:"Cascadia Mono",Consolas,"SF Mono",Menlo,"DejaVu Sans Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --plane:#0B1114; --surface:#141B20; --surface-2:#1B242A;
+    --ink:#EEF3F3; --ink-2:#A7B6B9; --muted:#7E8D91;
+    --hair:#222E33; --rule:#2E3C42;
+    --mark:#22A2AF; --mark-soft:rgba(34,162,175,.18); --mark-ink:#63C4CE;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0B1114; --surface:#141B20; --surface-2:#1B242A;
+  --ink:#EEF3F3; --ink-2:#A7B6B9; --muted:#7E8D91;
+  --hair:#222E33; --rule:#2E3C42;
+  --mark:#22A2AF; --mark-soft:rgba(34,162,175,.18); --mark-ink:#63C4CE;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+:root[data-theme="light"]{
+  color-scheme: light;
+  --plane:#F4F6F5; --surface:#FFFFFF; --surface-2:#EDF1F0;
+  --ink:#0F1A1D; --ink-2:#4B5A5E; --muted:#7E8D91;
+  --hair:#DCE4E3; --rule:#C6D2D1;
+  --mark:#0093A3; --mark-soft:rgba(0,147,163,.13); --mark-ink:#00636F;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--plane);color:var(--ink);
+  font-family:var(--serif);font-size:17.5px;line-height:1.66;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+.wrap{max-width:720px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+section{padding:clamp(32px,4.5vw,54px) 0;border-top:1px solid var(--hair)}
+section:first-of-type{border-top:0}
+
+h1,h2,h3,h4{font-family:var(--sans);font-weight:800;letter-spacing:-.025em;
+  text-wrap:balance;margin:0}
+h1{font-size:clamp(29px,5.2vw,46px);line-height:1.07}
+h2{font-size:clamp(22px,3vw,30px);line-height:1.15;margin-bottom:.5em}
+h4{font-size:16.5px;letter-spacing:-.01em;margin:0 0 .3em}
+p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
+strong{font-weight:700;color:var(--ink)}
+a{color:var(--mark-ink);text-decoration-thickness:1px;text-underline-offset:3px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--hair)}
+.lede{font-size:clamp(18px,2vw,21px);line-height:1.5;color:var(--ink-2)}
+.note{font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--muted)}
+.plain{background:var(--mark-soft);border-left:3px solid var(--mark);
+  padding:16px 20px;margin:22px 0 0;border-radius:0 4px 4px 0}
+.plain > .plain-h{font-family:var(--mono);font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mark-ink);
+  display:block;margin-bottom:6px}
+.plain p{font-size:16.5px;margin-bottom:.6em}
+
+/* титул */
+.hero{padding-top:clamp(32px,5vw,64px);padding-bottom:clamp(26px,3.5vw,40px)}
+.specimen{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 26px;
+  padding-bottom:20px;margin-bottom:26px;border-bottom:2px solid var(--ink)}
+.specimen b{color:var(--ink);font-weight:600;letter-spacing:.06em}
+.hero h1{margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--mark-ink)}
+
+/* два документа */
+.docs{display:grid;gap:2px;margin-top:24px;background:var(--hair);
+  border:1px solid var(--hair);border-radius:5px;overflow:hidden}
+.doc{background:var(--surface);padding:18px clamp(16px,3vw,24px)}
+.doc a{font-family:var(--sans);font-weight:700;font-size:17px}
+.doc p{font-size:15.5px;color:var(--ink-2);margin:.35em 0 0}
+.doc .when{font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-top:8px}
+
+/* нумерованные просьбы */
+ol.asks{list-style:none;counter-reset:a;margin:24px 0 0;padding:0;
+  display:grid;gap:2px;background:var(--hair);
+  border:1px solid var(--hair);border-radius:5px;overflow:hidden}
+ol.asks li{background:var(--surface);counter-increment:a;
+  padding:17px clamp(16px,3vw,24px) 17px clamp(48px,7vw,58px);position:relative}
+ol.asks li::before{content:counter(a);position:absolute;
+  left:clamp(16px,3vw,24px);top:17px;
+  font-family:var(--sans);font-weight:800;font-size:17px;color:var(--mark-ink)}
+ol.asks p{font-size:16px;margin:0}
+ol.asks p + p{margin-top:.45em}
+
+/* сделано */
+.done{margin:22px 0 0;padding:0;list-style:none;
+  font-size:16.5px;line-height:1.6}
+.done li{padding-left:26px;position:relative;margin-bottom:.6em}
+.done li:last-child{margin-bottom:0}
+.done li::before{content:"—";position:absolute;left:0;color:var(--mark-ink);font-weight:700}
+
+footer{padding:34px 0 56px;border-top:1px solid var(--hair)}
+</style>
+
+<div class="wrap">
+
+<!-- ══════════════════ ТИТУЛ ══════════════════ -->
+<section class="hero">
+  <div class="specimen">
+    <span>ООО КДЛ «ЛораК» · <b>Уфа</b></span>
+    <span><b>Сопроводительное письмо</b></span>
+    <span>К отчёту от <b>25 июля 2026</b></span>
+    <span>Читать <b>~4 минуты</b></span>
+  </div>
+
+  <h1>Что это за отчёт, что от вас нужно <em>и что уже сделано</em></h1>
+
+  <p class="lede">Отчёт получился объёмным, поэтому сначала — одна страница: зачем он,
+  какие решения от него ждут и в каком состоянии сейчас работа. Дальше можно читать
+  в своём темпе.</p>
+</section>
+
+<!-- ══════════════════ ЧТО ЭТО ══════════════════ -->
+<section>
+  <div class="eyebrow">Первое · что это</div>
+  <h2>Это первая измеренная картина ниши</h2>
+
+  <p>До сих пор про поиск в вашей нише не было известно ничего конкретного: ни где стоит
+  сайт «ЛораК», ни где лежит спрос, ни сколько он стоит, ни кто впереди. Отчёт закрывает
+  этот пробел: где вы находитесь, куда уходят деньги клиентов сегодня и что мешает
+  их забрать.</p>
+
+  <p>Ни одна цифра в нём не оценочная. Источники — пять инструментов Яндекса
+  (18 месяцев истории, разрезы до города Уфы), Метрика, живые торги Директа по вашим
+  собственным словам и ваш прайс. Единственное место с расчётом, а не с фактом, —
+  таблица бюджета, и там это написано прямо.</p>
+
+  <div class="docs">
+    <div class="doc">
+      <a href="index.html">Отчёт — короткая версия →</a>
+      <p>Только выводы и решения: пять главных фактов, сколько нужно бюджета,
+      как считать звонки, план работ и шесть вопросов.</p>
+      <span class="when">10 минут · с этого начинать</span>
+    </div>
+    <div class="doc">
+      <a href="podrobno.html">Подробный разбор →</a>
+      <p>Всё, что стоит за выводами: девять показателей с графиками, разрезы по запросам
+      и страницам, сравнение с конкурентами, методика и полный список из 43 задач.</p>
+      <span class="when">40 минут · открывать не обязательно</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ ЧТО НУЖНО ══════════════════ -->
+<section>
+  <div class="eyebrow">Второе · что от вас нужно</div>
+  <h2>Три решения и два коротких шага</h2>
+
+  <p>Всё, что можно было выяснить самим — из кабинета, прайса, сайта, реестров, —
+  выяснено, и вопросов об этом нет. Осталось то, чего нет ни в одних данных.</p>
+
+  <ol class="asks">
+    <li>
+      <p><strong>Ответы на шесть вопросов</strong> в конце короткой версии.</p>
+      <p>Приоритет по деньгам · где есть свободный запас приёма · по каким специальностям
+      идёт приём и почему в перечне для Яндекса 13 врачей · заводим ли УЗИ вен ног и НИПТ ·
+      есть ли срочные анализы · цены приёма ниже рынка — это позиция или недосмотр.</p>
+    </li>
+    <li>
+      <p><strong>Бюджет — назвать строку в таблице, а не сумму на глаз.</strong></p>
+      <p>В отчёте показано, что покупает каждый уровень бюджета и где проходит порог,
+      ниже которого реклама Яндекса не обучается и работает вслепую. Нужно понимание,
+      с какой строки стартуем.</p>
+    </li>
+    <li>
+      <p><strong>Решение по учёту звонков.</strong></p>
+      <p>93 % всех обращений с сайта — это нажатие на номер телефона. Пока звонки
+      не считаются, вопрос «сколько стоит клиент и окупается ли реклама» остаётся
+      без честного ответа: мы будем считать примерно, а вы — верить на слово.</p>
+    </li>
+  </ol>
+
+  <div class="plain">
+    <span class="plain-h">И два технических шага перед первым показом</span>
+    <p><strong>Убрать служебную строку «НЕ ВЫБИРАТЬ!» из прайса</strong> — это посадочная
+    страница первой кампании, человек с рекламы попадает именно туда. Передано разработчикам.</p>
+    <p><strong>Пополнить счёт рекламного кабинета.</strong> Всё остальное к старту готово.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ ЧТО СДЕЛАНО ══════════════════ -->
+<section>
+  <div class="eyebrow">Третье · что уже сделано</div>
+  <h2>Реклама собрана и ждёт команды</h2>
+
+  <p>Три кампании по Уфе собраны полностью, прошли модерацию Яндекса и стоят
+  с выключенными показами: поиск по анализам, поиск по ДНК-тесту и размещение
+  на Картах по всем филиалам. Слова, тексты, отсечки, цели, контакты филиалов —
+  всё внутри. <strong>Показы включаются в день, когда будет команда</strong>
+  (и выполнены два шага выше).</p>
+
+  <p>Второй город, Магнитогорск, не подключён по причине, которая от исполнителя
+  не зависит: второй рекламный кабинет требует другого тарифа обслуживания —
+  5 000 ₽ в месяц вместо 1 000 ₽. Это решение владельца; пока оно не принято,
+  город стоит.</p>
+
+  <p>Оплачивалась разовая работа — сборка и запуск кампаний по двум городам.
+  <strong>Исследование ниши в неё не входило</strong> и сделано по инициативе
+  исполнителя: включать рекламу вслепую на рынке, о котором ничего не известно,
+  дороже, чем сначала его измерить. Из этой работы вышли:</p>
+
+  <ul class="done">
+    <li>картина спроса и денег в нише по пяти инструментам Яндекса, с историей
+      за 18 месяцев и разрезами до города;</li>
+    <li>семантика кампаний и три уровня отсечек, чтобы не платить за чужие запросы;</li>
+    <li>расчёт экономики на живых торгах Яндекса: сколько стоит переход, обращение
+      и какой бюджет проходит порог обучения;</li>
+    <li>17 дефектов сайта, найденных по данным поиска и переданных разработчикам
+      готовым перечнем;</li>
+    <li>список из 43 задач с приоритетами — то, из чего складывается работа
+      ближайших месяцев;</li>
+    <li>ежедневный сбор данных, которые Яндекс хранит три месяца и затем стирает
+      безвозвратно: этот архив нельзя купить позже, его можно только копить.</li>
+  </ul>
+
+  <p style="margin-top:1.05em">Это сказано не для того, чтобы выставить счёт,
+  а чтобы было видно, из чего сложился отчёт и почему он появился раньше
+  первых показов.</p>
+</section>
+
+<!-- ══════════════════ ПРО САЙТ ══════════════════ -->
+<section>
+  <div class="eyebrow">Оговорка · про раздел о сайте</div>
+  <h2>Список работ, а не разбор полётов</h2>
+
+  <p>В отчёте есть заметный блок про сайт. Это перечень того, что стоит сделать,
+  а не претензии к тем, кто его делал. Большую часть этих пунктов физически нельзя
+  увидеть без данных Яндекса: какие страницы не получают ни одного показа, по каким
+  словам сайт не ранжируется, где обрывается путь клиента. Данные появились только
+  сейчас — вместе с этим исследованием.</p>
+
+  <p>Список собран в форме, которую можно взять и сделать: что именно, где именно
+  и почему это стоит денег.</p>
+</section>
+
+<!-- ══════════════════ ДАЛЬШЕ ══════════════════ -->
+<section>
+  <div class="eyebrow">Что дальше</div>
+  <h2>После ответов</h2>
+
+  <p>Первая очередь работ не ждёт ничего, кроме ответов и решения по бюджету:
+  пересборка слов на настоящих городских данных, новые отсечки, корректировка
+  ставок по дням недели, длинный хвост номенклатуры. Это неделя работы.</p>
+
+  <p>Дальше — регулярно и по цифрам: недельный отчёт по расходу и обращениям,
+  контроль позиций, чистка мусорных запросов, страница за страницей по направлениям,
+  которые сегодня не приносят ничего. Единственное, чего эта работа не переживает, —
+  пауз: данные утекают, позиции меняются каждую неделю, а реклама, оставленная
+  без присмотра, за месяц уходит в мусорные запросы.</p>
+
+  <p class="note" style="margin-top:20px">Вопросы по любому пункту — можно прямо
+  по тексту отчёта, с указанием раздела. Отвечу подробно.</p>
+</section>
+
+<footer>
+  <p class="note">Сопроводительное письмо к отчёту от 25 июля 2026 · ufa.loraklab.ru ·
+  страница закрыта от индексации поисковыми системами, ссылку публично не размещать:
+  внутри коммерческие данные.</p>
+</footer>
+
+</div><!-- /wrap -->
+
+</body>
+</html>
