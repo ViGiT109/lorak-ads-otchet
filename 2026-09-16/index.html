@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Почему наша реклама внизу</title>
+</head>
+<body>
+<style>
+/* ─────────────── токены (общие с отчётом 2026-07-25) ─────────────── */
+:root{
+  color-scheme: light;
+  --plane:#F4F6F5; --surface:#FFFFFF; --surface-2:#EDF1F0;
+  --ink:#0F1A1D; --ink-2:#4B5A5E; --muted:#6F7F83;
+  --hair:#DCE4E3; --rule:#C6D2D1;
+  --mark:#0093A3; --mark-soft:rgba(0,147,163,.13); --mark-ink:#00636F;
+  --hatch:rgba(0,147,163,.38);
+  --shadow:0 1px 2px rgba(15,26,29,.05), 0 8px 24px -16px rgba(15,26,29,.18);
+  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --serif:Georgia,"Noto Serif","Liberation Serif","Times New Roman",serif;
+  --mono:"Cascadia Mono",Consolas,"SF Mono",Menlo,"DejaVu Sans Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --plane:#0B1114; --surface:#141B20; --surface-2:#1B242A;
+    --ink:#EEF3F3; --ink-2:#A7B6B9; --muted:#85959A;
+    --hair:#222E33; --rule:#34444A;
+    --mark:#22A2AF; --mark-soft:rgba(34,162,175,.18); --mark-ink:#63C4CE;
+    --hatch:rgba(34,162,175,.5);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0B1114; --surface:#141B20; --surface-2:#1B242A;
+  --ink:#EEF3F3; --ink-2:#A7B6B9; --muted:#85959A;
+  --hair:#222E33; --rule:#34444A;
+  --mark:#22A2AF; --mark-soft:rgba(34,162,175,.18); --mark-ink:#63C4CE;
+  --hatch:rgba(34,162,175,.5);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--plane);color:var(--ink);
+  font-family:var(--serif);font-size:17.5px;line-height:1.66;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+.wrap{max-width:900px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.col{max-width:660px}
+section{padding-block:clamp(40px,5.5vw,64px);border-top:1px solid var(--hair)}
+
+h1,h2,h3{font-family:var(--sans);font-weight:800;letter-spacing:-.025em;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5.4vw,50px);line-height:1.06}
+h2{font-size:clamp(24px,3.4vw,34px);line-height:1.13;margin-bottom:.55em}
+h3{font-size:clamp(18px,2.1vw,21px);line-height:1.26;letter-spacing:-.018em;margin:0 0 .4em}
+p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
+ul{margin:0 0 1.05em;padding-left:21px}
+li{margin-bottom:.5em}
+strong{font-weight:700;color:var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--muted);display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--hair)}
+.lede{font-size:clamp(19px,2.1vw,22px);line-height:1.5;color:var(--ink-2)}
+.note{font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--muted)}
+.plain{background:var(--mark-soft);border-left:3px solid var(--mark);
+  padding:16px 20px;margin:26px 0 0;border-radius:0 4px 4px 0;max-width:660px}
+.plain-h{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mark-ink);display:block;margin-bottom:6px}
+.plain p{font-size:16.5px;margin-bottom:.6em}
+.plain p:last-child{margin-bottom:0}
+.after{margin-top:26px}
+
+/* титул */
+.hero{padding-top:clamp(34px,6vw,70px);padding-bottom:clamp(30px,4vw,48px)}
+.specimen{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 26px;
+  padding-bottom:20px;margin-bottom:26px;border-bottom:2px solid var(--ink)}
+.specimen b{color:var(--ink);font-weight:600;letter-spacing:.06em}
+.hero h1{margin-bottom:22px}
+.hero h1 em{font-style:normal;color:var(--mark-ink)}
+
+/* три цифры */
+.finds{display:grid;gap:2px;margin-top:30px;background:var(--hair);
+  border:1px solid var(--hair);border-radius:5px;overflow:hidden}
+.find{background:var(--surface);padding:18px clamp(16px,3vw,26px);display:grid;gap:6px}
+@media (min-width:720px){.find{grid-template-columns:200px 1fr;gap:22px;align-items:baseline}}
+.fig{font-family:var(--sans);font-weight:800;font-size:clamp(24px,3vw,30px);line-height:1.08;
+  letter-spacing:-.03em;color:var(--mark-ink);font-variant-numeric:tabular-nums;min-width:0}
+.fig small{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-top:5px;line-height:1.4}
+.find p{font-size:16.5px;margin:0}
+
+/* схема выдачи */
+.serp-grid{display:grid;gap:30px}
+@media (min-width:800px){.serp-grid{grid-template-columns:minmax(0,1fr) 330px;gap:40px;align-items:start}}
+.serp-fig{margin:0;max-width:360px;width:100%;justify-self:center}
+.serp-fig svg{display:block;width:100%;height:auto}
+.serp-fig figcaption{margin-top:10px}
+.s-frame{fill:var(--surface);stroke:var(--rule);stroke-width:1.5}
+.s-bar{fill:var(--surface-2);stroke:var(--rule);stroke-width:1}
+.s-q{fill:var(--ink);font-family:var(--sans);font-size:13px}
+.s-lab{fill:var(--muted);font-family:var(--mono);font-size:9.5px;letter-spacing:.08em}
+.s-price{fill:var(--ink-2);font-family:var(--mono);font-size:10px;font-weight:700}
+.s-row{fill:var(--surface-2)}
+.s-row-us{fill:var(--mark-soft);stroke:var(--mark);stroke-width:1.2}
+.s-name{fill:var(--ink-2);font-family:var(--sans);font-size:12px}
+.s-name-us{fill:var(--ink);font-family:var(--sans);font-size:12px;font-weight:700}
+.s-tag{fill:var(--muted);font-family:var(--mono);font-size:8.5px;letter-spacing:.06em}
+.s-tag-us{fill:var(--mark-ink);font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.06em}
+.s-line{stroke:var(--hair);stroke-width:5;stroke-linecap:round}
+.s-map{fill:var(--surface-2)}
+.s-road{stroke:var(--rule);stroke-width:2;fill:none}
+.s-pin{fill:var(--mark)}
+.s-pin-o{fill:var(--muted)}
+.s-note{fill:var(--muted);font-family:var(--serif);font-size:11.5px;font-style:italic}
+
+/* доли верх/низ */
+.split{display:grid;gap:14px;margin-top:24px}
+.split-row{display:grid;gap:6px}
+.split-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;font-family:var(--sans);font-size:14.5px}
+.split-h span:last-child{color:var(--muted);font-family:var(--mono);font-size:12px}
+.bar{display:flex;height:26px;border-radius:3px;overflow:hidden;background:var(--surface-2);
+  font-family:var(--mono);font-size:11.5px;font-weight:600}
+.bar i{display:flex;align-items:center;padding-inline:8px;font-style:normal;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+.bar .top{background:var(--mark);color:var(--surface)}
+.bar .bot{background:var(--rule);color:var(--ink);flex:1;justify-content:flex-end}
+
+/* таблицы */
+.tw{overflow-x:auto;margin:24px 0 0;border:1px solid var(--hair);border-radius:5px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-family:var(--sans);font-size:15px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--hair);vertical-align:baseline}
+th{font-size:11px;font-family:var(--mono);font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);line-height:1.35}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tr.us td{background:var(--mark-soft);font-weight:700}
+tr.sum td{font-weight:700;border-top:2px solid var(--rule)}
+td .cmt{display:block;font-family:var(--serif);font-size:13.5px;font-weight:400;color:var(--muted);
+  white-space:normal;margin-top:2px}
+
+/* пары карточек */
+.pair{display:grid;gap:14px;margin-top:24px}
+@media (min-width:720px){.pair{grid-template-columns:1fr 1fr}}
+.cell{background:var(--surface);border:1px solid var(--hair);border-radius:5px;padding:18px 20px}
+.cell .fig{font-size:clamp(24px,3vw,30px);margin-bottom:8px}
+.cell p{font-size:16px;margin:0}
+
+/* три шага */
+.steps{display:grid;gap:14px;margin-top:26px;counter-reset:step}
+.step{background:var(--surface);border:1px solid var(--hair);border-radius:5px;
+  padding:20px clamp(16px,3vw,26px);display:grid;gap:6px 20px}
+@media (min-width:720px){.step{grid-template-columns:48px minmax(0,1fr)}}
+.step::before{counter-increment:step;content:counter(step);font-family:var(--sans);font-weight:800;
+  font-size:34px;line-height:1;color:var(--mark-ink);letter-spacing:-.03em}
+.step p,.step li{font-size:16px}
+.meta{font-family:var(--mono);font-size:12px;line-height:1.5;color:var(--ink-2);
+  display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:12px;padding-top:12px;border-top:1px solid var(--hair)}
+.meta b{display:block;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:10px}
+
+/* лестница бюджета */
+.ladder{margin-top:18px;display:grid;gap:14px}
+.rung{display:grid;gap:5px}
+.rung-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;font-family:var(--sans);font-size:14.5px}
+.rung-h b{font-weight:700}
+.rung-h span{font-family:var(--mono);font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.track{height:22px;background:var(--surface-2);border-radius:3px;overflow:hidden;display:flex}
+.track i{display:block}
+.track .base{background:var(--rule)}
+.track .add{background:var(--mark)}
+.track .rng{background:repeating-linear-gradient(135deg,var(--hatch) 0 4px,transparent 4px 8px)}
+.axis{position:relative;height:16px;font-family:var(--mono);font-size:10.5px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.axis span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.axis span.first{transform:none}
+.axis span.last{transform:translateX(-100%)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px;margin-right:6px}
+.legend .sw-base{background:var(--rule)}
+.legend .sw-top{background:var(--mark)}
+.legend .sw-rng{background:repeating-linear-gradient(135deg,var(--hatch) 0 3px,transparent 3px 6px);outline:1px solid var(--hatch)}
+
+/* решения */
+.qlist{display:grid;gap:2px;margin-top:24px;background:var(--hair);
+  border:1px solid var(--hair);border-radius:5px;overflow:hidden}
+.q{background:var(--surface);padding:17px clamp(16px,3vw,24px)}
+.q h3{font-size:17.5px;margin-bottom:.35em}
+.q p{font-size:16px;margin:0}
+.q .why{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--mark-ink);margin-top:9px;display:block}
+
+footer{padding-block:36px 60px;border-top:1px solid var(--hair)}
+footer p{max-width:660px}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="specimen">
+    <span><b>ЛораК · Уфа</b></span>
+    <span>16 сентября 2026</span>
+    <span>для директора</span>
+    <span>читать 6 минут</span>
+  </div>
+  <h1>Вы правы: по «сдать анализы уфа» наша реклама <em>в основном внизу</em></h1>
+  <div class="col">
+    <p class="lede">Это не сбой настройки. Верхние места разыгрываются на аукционе за каждый клик, и конкуренты платят там около 150&nbsp;₽ — потому что у них этот клик окупается. Значит, вопрос не «дорого ли», а что происходит после клика: клиентов приносит не реклама сама по себе, а связка из учёта звонков, страниц сайта, куда она ведёт, и бюджета.</p>
+  </div>
+
+  <div class="finds">
+    <div class="find">
+      <div class="fig">74&nbsp;%<small>показов «Анализов» — внизу</small></div>
+      <p>Три из четырёх показов нашего объявления о сдаче анализов приходятся на нижний блок, под обычной выдачей. Сверху на объявления кликают в 7–12 раз чаще.</p>
+    </div>
+    <div class="find">
+      <div class="fig">16&nbsp;₽ и 150&nbsp;₽<small>наш клик и первое место</small></div>
+      <p>Наш средний клик стоит как место в нижнем блоке. Первое место по «сдать анализы» — около 150&nbsp;₽ за клик, последнее место вверху — около 70&nbsp;₽. Столько платят конкуренты, и платят месяцами.</p>
+    </div>
+    <div class="find">
+      <div class="fig">136 обращений<small>столько мы видим за 5 недель</small></div>
+      <p>72 нажатия «Позвонить» в Картах, 23 открытия номера на сайте, 18 переходов в мессенджер, 16 маршрутов, 6 заявок формой и одна онлайн-запись — заявку оставили около четырёх человек. Тех, кто позвонил напрямую или пришёл по адресу, статистика не видит вовсе.</p>
+    </div>
+  </div>
+</header>
+
+<section id="page">
+  <div class="eyebrow">Страница поиска</div>
+  <div class="serp-grid">
+    <div>
+      <h2>На странице Яндекса реклама стоит в трёх местах</h2>
+      <p><strong>Верхний блок</strong> — над обычными результатами, до четырёх объявлений. За него идёт аукцион: выигрывает тот, кто готов заплатить за клик больше.</p>
+      <p><strong>Блок карты</strong> — карта с точками. Здесь наши карточки стоят первыми. Это реклама в Яндекс Картах, и её легко не опознать как рекламу: у неё только маленькая пометка «Промо».</p>
+      <p><strong>Нижний блок</strong> — под обычными результатами. Место тоже рекламное, но до него долистывают немногие, поэтому клик здесь в разы дешевле.</p>
+      <p>На схеме — страница по «сдать анализы уфа» ночью 16&nbsp;сентября: наверху чужие объявления, наши — в карте и внизу. Скорее всего, вы видели примерно это.</p>
+
+      <div class="split" role="group" aria-label="Доля показов вверху и внизу, 5 августа — 1 сентября">
+        <div class="split-row">
+          <div class="split-h"><span>«Анализы», 5 августа — 1 сентября</span><span>16 817 показов</span></div>
+          <div class="bar"><i class="top" style="width:26%">26&nbsp;%</i><i class="bot">74&nbsp;% внизу</i></div>
+        </div>
+        <div class="split-row">
+          <div class="split-h"><span>«Тест ДНК», тот же период</span><span>1 641 показ</span></div>
+          <div class="bar"><i class="top" style="width:48%">48&nbsp;% вверху</i><i class="bot">52&nbsp;%</i></div>
+        </div>
+        <div class="legend"><span><i class="sw-top"></i>верхний блок</span><span><i class="sw-base"></i>нижний блок</span></div>
+      </div>
+      <p class="note" style="margin-top:14px">В сентябре (12–15.09) картина та же: «Анализы» — 74&nbsp;% показов внизу. В августе 72&nbsp;% кликов «Анализов» пришли из верхнего блока, хотя показов там была четверть.</p>
+    </div>
+
+    <figure class="serp-fig">
+      <svg viewBox="0 0 360 690" role="img" aria-labelledby="serp-t">
+        <title id="serp-t">Схема страницы поиска Яндекса по запросу «сдать анализы уфа»: сверху объявления telemed-dr и Lab4U, в блоке карты первыми две карточки ЛораК, в обычной выдаче ЛораК нет, в нижнем блоке ЛораК третьей</title>
+        <rect class="s-frame" x="1" y="1" width="358" height="688" rx="18"/>
+        <rect class="s-bar" x="16" y="16" width="328" height="36" rx="18"/>
+        <text class="s-q" x="34" y="39">сдать анализы уфа</text>
+
+        <text class="s-lab" x="16" y="78">РЕКЛАМА · ВЕРХНИЙ БЛОК</text>
+        <text class="s-price" x="344" y="78" text-anchor="end">клик 70–150 ₽</text>
+        <rect class="s-row" x="16" y="86" width="328" height="38" rx="6"/>
+        <text class="s-name" x="28" y="110">telemed-dr</text>
+        <text class="s-tag" x="332" y="109" text-anchor="end">РЕКЛАМА</text>
+        <rect class="s-row" x="16" y="130" width="328" height="38" rx="6"/>
+        <text class="s-name" x="28" y="154">Lab4U</text>
+        <text class="s-tag" x="332" y="153" text-anchor="end">РЕКЛАМА</text>
+
+        <text class="s-lab" x="16" y="196">БЛОК КАРТЫ</text>
+        <rect class="s-map" x="16" y="204" width="328" height="70" rx="6"/>
+        <path class="s-road" d="M16 246 C 90 228, 160 262, 250 236 S 330 244, 344 230"/>
+        <path class="s-road" d="M120 204 C 130 230, 110 252, 132 274"/>
+        <path class="s-road" d="M262 204 C 250 226, 276 250, 262 274"/>
+        <circle class="s-pin" cx="92" cy="234" r="6"/>
+        <circle class="s-pin" cx="196" cy="254" r="6"/>
+        <circle class="s-pin-o" cx="292" cy="222" r="5"/>
+        <rect class="s-row-us" x="16" y="280" width="328" height="30" rx="6"/>
+        <text class="s-name-us" x="28" y="300">ЛораК</text>
+        <text class="s-tag-us" x="332" y="299" text-anchor="end">ПРОМО</text>
+        <rect class="s-row-us" x="16" y="314" width="328" height="30" rx="6"/>
+        <text class="s-name-us" x="28" y="334">ЛораК</text>
+        <text class="s-tag-us" x="332" y="333" text-anchor="end">ПРОМО</text>
+        <rect class="s-row" x="16" y="348" width="328" height="30" rx="6"/>
+        <text class="s-name" x="28" y="368">KDL</text>
+
+        <text class="s-lab" x="16" y="406">ОБЫЧНАЯ ВЫДАЧА</text>
+        <text class="s-name" x="16" y="430">Гемотест</text>
+        <line class="s-line" x1="16" y1="441" x2="300" y2="441"/>
+        <text class="s-name" x="16" y="466">НаПоправку</text>
+        <line class="s-line" x1="16" y1="477" x2="270" y2="477"/>
+        <text class="s-name" x="16" y="502">Хеликс · Ситилаб · KDL · Инвитро…</text>
+        <line class="s-line" x1="16" y1="513" x2="320" y2="513"/>
+        <text class="s-note" x="16" y="537">ЛораК в первой десятке нет</text>
+
+        <text class="s-lab" x="16" y="566">РЕКЛАМА · НИЖНИЙ БЛОК</text>
+        <text class="s-price" x="344" y="566" text-anchor="end">клик 15–40 ₽</text>
+        <rect class="s-row" x="16" y="574" width="328" height="30" rx="6"/>
+        <text class="s-name" x="28" y="594">telemed-dr</text>
+        <rect class="s-row" x="16" y="608" width="328" height="30" rx="6"/>
+        <text class="s-name" x="28" y="628">Хеликс</text>
+        <rect class="s-row-us" x="16" y="642" width="328" height="30" rx="6"/>
+        <text class="s-name-us" x="28" y="662">ЛораК</text>
+        <text class="s-tag-us" x="332" y="661" text-anchor="end">НАШ КЛИК ≈16 ₽</text>
+      </svg>
+      <figcaption class="note">Снимок одного момента: ночь 16.09, компьютер. Днём у конкурентов другие бюджеты, расстановка может отличаться. В нижнем блоке после ЛораК ещё KDL и Гастроцентр.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="why">
+  <div class="eyebrow">Почему внизу</div>
+  <div class="col">
+    <h2>Верх стоит в 4–9 раз дороже нашего клика</h2>
+    <p>Яндекс показывает, сколько сейчас спишут за клик на каждом месте. Цены по самым частым запросам на 16 сентября, без НДС:</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Запрос</th><th class="n">Первое место вверху</th><th class="n">Последнее место вверху</th><th class="n">Нижний блок</th></tr></thead>
+      <tbody>
+        <tr><td>сдать анализы</td><td class="n">149 ₽</td><td class="n">69 ₽</td><td class="n">17–36 ₽</td></tr>
+        <tr><td>где сдать анализы</td><td class="n">110 ₽</td><td class="n">50 ₽</td><td class="n">14–29 ₽</td></tr>
+        <tr><td>лаборатория анализов</td><td class="n">168 ₽</td><td class="n">77 ₽</td><td class="n">16–40 ₽</td></tr>
+        <tr><td>тест на отцовство</td><td class="n">71 ₽</td><td class="n">35 ₽</td><td class="n">10–20 ₽</td></tr>
+        <tr class="us"><td>Наш средний клик «Анализов»<span class="cmt">август — сентябрь</span></td><td class="n" colspan="3">15–18 ₽ — цена нижнего блока</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col after">
+    <p>На «Анализы» в неделю уходит 2&nbsp;700&nbsp;₽. Кампания настроена собирать как можно больше кликов за эти деньги — и собирает их там, где дёшево: в нижнем блоке и по тысячам редких запросов, у каждого из которых 1–4 показа в месяц. Дорогие популярные запросы она пропускает.</p>
+    <p>Поэтому по «сдать анализы уфа» (около 3&nbsp;500 запросов в месяц по Уфе) наше объявление за четыре недели августа показалось <strong>21 раз</strong>. Когда вы вводите такой популярный запрос, вы видите нас внизу или не видите вовсе.</p>
+    <p>Так настроено сознательно. Те же 2&nbsp;700&nbsp;₽ в неделю в верхнем блоке — это 18–38 кликов вместо 170. Мы стали бы заметнее, а людей на сайте стало бы в 4–9 раз меньше.</p>
+  </div>
+  <div class="plain">
+    <span class="plain-h">Что это значит для денег</span>
+    <p>Место на странице покупается за клик, а не за месяц. На 30 тысяч можно либо быть заметными по нескольким популярным запросам, либо приводить в 4–9 раз больше людей по дешёвым. Мы выбрали людей.</p>
+  </div>
+</section>
+
+<section id="auction">
+  <div class="eyebrow">Аукцион</div>
+  <div class="col">
+    <h2>150 ₽ за клик назначил не Яндекс, а конкуренты</h2>
+    <p>Мест наверху нельзя «купить на месяц». Каждый раз, когда человек вводит запрос, Яндекс заново разыгрывает четыре верхних места между всеми, кто хочет показаться. Выигрывает тот, кто готов заплатить за клик больше (при прочих равных — у кого объявление лучше). Цена в таблице выше — это не прайс Яндекса, а то, сколько прямо сейчас ставят другие.</p>
+    <p><strong>И это главная новость, а не плохая.</strong> Telemed-dr, Lab4U, Хеликс, KDL платят по 70–150&nbsp;₽ за клик каждый день, месяцами. Никто не делает этого из упрямства: значит, у них клик по «сдать анализы» окупается — клиент приносит больше, чем стоил его приход. Спрос в Уфе платёжеспособный, и рынок это подтверждает деньгами.</p>
+    <p><strong>Почему мы в этот аукцион пока не идём — не из экономии, а потому что не можем посчитать отдачу.</strong> В медицине она копится: человек звонит с телефона, приходит в ближайшую лабораторию по адресу из карточки, возвращается через полгода, приводит семью. Из всего этого статистика сайта видит только маленький кусочек — что посетитель нажал на номер или заполнил форму. Поднимать ставку в 4–9 раз, видя один этот кусочек, — значит платить вслепую.</p>
+    <p>Что кусочек всё-таки показывает: у нас на него приходится 1,5&nbsp;% рекламных посетителей, в среднем по медицине — 5&nbsp;%. Это не «цена клиента» и не вся отдача, но сравнение честное: сайт у всех меряется одинаково, и наш показывает втрое меньше. Первое, что нужно чинить, — вход, а не ставка.</p>
+    <p>Так что вывод «раз дорого — не нужна такая реклама» неверен. Верные слова другие: <strong>верх нам нужен, но заходить в него надо с работающим счётчиком и починенными страницами.</strong> Это два шага ниже. После них видно, сколько на самом деле приносит клик, — и тогда ставку поднимаем осознанно, зная, до какой цены нам выгодно торговаться.</p>
+  </div>
+</section>
+
+<section id="maps">
+  <div class="eyebrow">Не только поиск</div>
+  <div class="col">
+    <h2>Реклама идёт ещё в Картах и по тесту ДНК</h2>
+    <p>Кроме «Анализов» работают ещё две кампании, и у них картина лучше.</p>
+  </div>
+  <div class="pair">
+    <div class="cell">
+      <div class="fig">72 нажатия «Позвонить»</div>
+      <p>Карточки 13 точек в Яндекс Картах и в блоке карты на странице поиска. Ещё 16 раз по ним строили маршрут. Это самый дешёвый путь к звонку: ≈107&nbsp;₽ за нажатие против ≈400&nbsp;₽ за действие на сайте.</p>
+    </div>
+    <div class="cell">
+      <div class="fig">половина — вверху</div>
+      <p>По тесту ДНК на отцовство реклама стоит в верхнем блоке в каждом втором показе. Здесь упор не в деньги, а в спрос: «тест на отцовство уфа» ищут около 200 раз в месяц, и недельный бюджет выбирается не до конца.</p>
+    </div>
+  </div>
+</section>
+
+<section id="result">
+  <div class="eyebrow">Результат</div>
+  <div class="col">
+    <h2>Что дала реклама с 1 августа по 15 сентября</h2>
+    <p>Показы шли пять с небольшим недель: с 3 по 11 сентября закончился баланс, и реклама стояла.</p>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Кампания</th><th class="n">Показы</th><th class="n">Клики</th><th class="n">Расход без НДС</th><th class="n">Цена клика</th><th>Действия людей</th></tr></thead>
+      <tbody>
+        <tr><td>Анализы</td><td class="n">27 657</td><td class="n">968</td><td class="n">14 132 ₽</td><td class="n">14,60 ₽</td><td>35<span class="cmt">открыли номер 19 · мессенджер 15 · заявка 1</span></td></tr>
+        <tr><td>Карты</td><td class="n">84 312</td><td class="n">397</td><td class="n">7 673 ₽</td><td class="n">19,33 ₽</td><td>92<span class="cmt">«Позвонить» 72 · маршрут 16 · прочее 4</span></td></tr>
+        <tr><td>Тест ДНК</td><td class="n">2 510</td><td class="n">279</td><td class="n">5 951 ₽</td><td class="n">21,33 ₽</td><td>9<span class="cmt">заявки 5 (от двух человек) · номер 4</span></td></tr>
+        <tr class="sum"><td>Итого</td><td class="n">114 479</td><td class="n">1 644</td><td class="n">27 757 ₽</td><td class="n">16,88 ₽</td><td>136</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col after">
+    <p><strong>Клик у нас вдвое дешевле, чем в медицине в целом</strong> по данным Яндекса: 17 против 37&nbsp;₽. Людей реклама приводит недорого.</p>
+    <p><strong>Обращаются в основном звонком, а не формой:</strong> из 136 действий 72 — нажатия «Позвонить» в Картах, а форму на сайте за пять недель заполнили около четырёх человек. Само по себе это нормально: в лабораторию звонят и приходят, а не переписываются. Плохо другое — на сайте до номера доходят 1,5&nbsp;% рекламных посетителей, а в среднем по медицине 5&nbsp;%. Причин две, и обе не в самой рекламе:</p>
+    <ul>
+      <li><strong>Сайту некуда принять человека с рекламы.</strong> Прайс не открывается на нужном анализе, у комплексов нет цен, на телефоне номер спрятан под плашкой про cookie. Человек ищет цену, не находит и уходит.</li>
+      <li><strong>Мы видим только маленькую часть отдачи.</strong> Статистика сайта знает, что посетитель нажал на номер, — и всё. Позвонил ли он, дошёл ли до лаборатории, вернулся ли через полгода, пришёл ли по адресу из карточки, не заходя на сайт, — не видно. В медицине отдача копится месяцами, и без учёта звонков мы меряем её по кончику.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="noise">
+  <div class="eyebrow">Главное</div>
+  <div class="col">
+    <h2>30 тысяч в месяц сейчас — это погрешность</h2>
+    <p>≈1&nbsp;400 кликов в месяц на весь город — примерно <strong>три посетителя в день на каждую из 14 точек</strong>. Из них 1,5&nbsp;% открывают номер. На фоне потока клиники такой прибавки не видно.</p>
+    <p>Если ничего не менять и подождать три месяца, через три месяца будет то же самое. А если менять — по тому, что мы сейчас видим на сайте, даже двукратный рост за три месяца не отличить от случайности: чисел слишком мало. По звонкам отличить можно — их около двадцати в неделю, но они пока не считаются.</p>
+    <p>Верхние места при нынешнем сайте — тоже погрешность: заметнее станем, но люди, пришедшие вчетверо дороже, так же не найдут цену и уйдут. Дело не в том, что верх плох, — мы теряем людей на входе.</p>
+  </div>
+  <div class="plain">
+    <span class="plain-h">Вывод</span>
+    <p>Реклама в Яндексе — не ролик на радио, который достаточно оплатить и ждать. Она даёт результат в связке: считаем звонки, ведём людей на страницы с ценой и кнопкой записи, и только потом добавляем бюджет. Каждый следующий шаг без предыдущего тратит деньги впустую.</p>
+  </div>
+</section>
+
+<section id="steps">
+  <div class="eyebrow">Что нужно</div>
+  <div class="col">
+    <h2>Три шага, именно в таком порядке</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div>
+        <h3>Считать звонки</h3>
+        <p>У Яндекса есть <strong>бесплатный учёт звонков</strong>, он включается в кабинете. Работает так: в объявлении и в карточке организации показывается другой номер, звонок с него Яндекс переводит на вашу линию и записывает в статистику. <strong>Номера на самом сайте при этом не меняются</strong> — подмена касается только рекламы.</p>
+        <p>Тогда станет видно, сколько звонков приносит каждый рубль, — и через три месяца будет с чем сравнивать. Считать звонки с сайта этот вариант не умеет: для этого есть платная связка, но начинать с неё не обязательно.</p>
+        <div class="meta"><span><b>Стоит</b>0 ₽ (платный вариант со звонками с сайта и записью разговоров — 2 500–7 400 ₽ в месяц)</span><span><b>Мешает</b>Яндекс требует подтверждённых прав на карточки организации, а на кого оформлен аккаунт Яндекс Бизнеса — найти не удалось</span></div>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h3>Починить страницы, куда ведёт реклама</h3>
+        <ul>
+          <li>прайс открывается сразу на том анализе, который человек искал;</li>
+          <li>у комплексов анализов есть цены;</li>
+          <li>на телефоне номер и кнопка записи видны сразу, а не под плашкой.</li>
+        </ul>
+        <p>Тот видимый показатель, по которому мы отстаём от медицины втрое, чинится именно здесь: человек, который дошёл до цены и увидел номер, обращается заметно чаще — <strong>на тех же деньгах</strong>. Это сильнее любой прибавки бюджета. Список правок по важности уже готов.</p>
+        <div class="meta"><span><b>Стоит</b>отдельная работа, оценка после разбора списка</span><span><b>Срок</b>после решения, кто делает</span></div>
+      </div>
+    </div>
+    <div class="step">
+      <div>
+        <h3>Добавить бюджет и постоянное ведение</h3>
+        <p>Прибавка идёт в верхний блок по популярным запросам. Клик там в 4–6 раз дороже, поэтому деньги покупают прежде всего заметность, а людей добавляют умеренно:</p>
+        <div class="ladder" role="group" aria-label="Клики в месяц при бюджете 30, 60 и 100 тысяч">
+          <div class="rung">
+            <div class="rung-h"><b>30 000 ₽ в месяц</b><span>≈1 410 кликов</span></div>
+            <div class="track"><i class="base" style="width:58.75%"></i></div>
+          </div>
+          <div class="rung">
+            <div class="rung-h"><b>60 000 ₽ в месяц</b><span>≈1 630–1 750 · +15–24&nbsp;%</span></div>
+            <div class="track"><i class="base" style="width:58.75%"></i><i class="add" style="width:9.04%"></i><i class="rng" style="width:5.17%"></i></div>
+          </div>
+          <div class="rung">
+            <div class="rung-h"><b>100 000 ₽ в месяц</b><span>≈1 920–2 200 · +36–56&nbsp;%</span></div>
+            <div class="track"><i class="base" style="width:58.75%"></i><i class="add" style="width:21.08%"></i><i class="rng" style="width:12.04%"></i></div>
+          </div>
+          <div class="axis" aria-hidden="true"><span class="first" style="left:0">0</span><span style="left:25%">600</span><span style="left:50%">1 200</span><span style="left:75%">1 800</span><span class="last" style="left:100%">2 400</span></div>
+          <div class="legend"><span><i class="sw-base"></i>нынешние кампании</span><span><i class="sw-top"></i>верхний блок, минимум</span><span><i class="sw-rng"></i>верхний блок, максимум</span></div>
+        </div>
+        <p class="note" style="margin-top:12px">Арифметика по сегодняшним ценам торгов, а не обещание. Из платежа до аукциона доходит ≈80&nbsp;% (комиссия агентства и НДС), клик вверху — 70–110&nbsp;₽.</p>
+        <p style="margin-top:12px">Ведение — постоянная работа, а не разовый запуск: каждую неделю чистка запросов, ставки и корректировки; проверка, что звонки и заявки считаются; контроль правок на страницах; отчёт раз в месяц с числом обращений, а не кликов.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="decide">
+  <div class="eyebrow">Что решить</div>
+  <div class="col">
+    <h2>Три решения и один вопрос</h2>
+  </div>
+  <div class="qlist">
+    <div class="q">
+      <h3>Включаем бесплатный учёт звонков? Номер в рекламе будет подменным</h3>
+      <p>Денег не стоит, но нужно ваше согласие на подменный номер в объявлениях и карточках (на сайте номера остаются свои) и нужно найти, на кого оформлен аккаунт Яндекс Бизнеса: без подтверждённых прав Яндекс его не включит.</p>
+      <span class="why">без этого любое «до и после» — гадание</span>
+    </div>
+    <div class="q">
+      <h3>Кто и когда чинит страницы сайта?</h3>
+      <p>Список правок готов и расставлен по важности. Нужны исполнитель и срок.</p>
+      <span class="why">даёт больше обращений на тех же деньгах</span>
+    </div>
+    <div class="q">
+      <h3>Какой бюджет после первых двух шагов: 30, 60 или 100 тысяч?</h3>
+      <p>До починки сайта прибавка денег покупает в основном заметность на странице поиска.</p>
+      <span class="why">решать после шагов 1 и 2, а не вместо них</span>
+    </div>
+    <div class="q">
+      <h3>Сколько клиентов в день приходит во все 14 точек?</h3>
+      <p>Хотя бы примерно, за обычный месяц. Тогда в следующем отчёте мы покажем, какую долю потока даёт реклама, — а не просто клики.</p>
+      <span class="why">без этого не понять, много 30 тысяч или мало</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="note">Откуда цифры: кабинет Яндекс Директа и Яндекс Метрика по Уфе, 1 августа — 15 сентября 2026, деньги без НДС. Цены мест — прогноз торгов Директа на 16.09. Средние по медицине — отраслевой отчёт Яндекса от 3 сентября. Число запросов — Вордстат по Уфе, это верхняя оценка. Заявки считаются по людям, а не по повторным открытиям страницы «Спасибо».</p>
+</footer>
+
+</div>
+
+</body>
+</html>
